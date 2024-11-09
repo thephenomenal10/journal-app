@@ -16,7 +16,6 @@ public class UserController {
     private UserService userService;
 
 
-
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
@@ -39,7 +38,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser() {
         try {
             userService.deleteUserByName();
-            return new ResponseEntity<>( HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

@@ -2,7 +2,6 @@ package com.edigest.journalapp.service;
 
 import com.edigest.journalapp.entity.User;
 import com.edigest.journalapp.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -15,9 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +27,7 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public User saveNewUser(User user){
+    public User saveNewUser(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(List.of("USER"));
@@ -42,16 +38,16 @@ public class UserService {
         }
     }
 
-    public User saveUser(User user){
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public User updateUser(User user){
-        try{
+    public User updateUser(User user) {
+        try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             User createdUser = userRepository.findByUsername(authentication.getName());
 
@@ -63,7 +59,7 @@ public class UserService {
         }
     }
 
-    public  Optional<User> getUserById(ObjectId id){
+    public Optional<User> getUserById(ObjectId id) {
         return userRepository.findById(id);
     }
 
@@ -88,10 +84,10 @@ public class UserService {
 
     public User findByUserName(String userName) {
         try {
-        User user =  userRepository.findByUsername(userName);
-        if(user != null){
-            return user;
-        }
+            User user = userRepository.findByUsername(userName);
+            if (user != null) {
+                return user;
+            }
             throw new InstanceNotFoundException("User not found");
         } catch (Exception e) {
             throw new RuntimeException(e);
