@@ -1,6 +1,7 @@
 package com.edigest.journalapp.controller;
 
 import com.edigest.journalapp.entity.User;
+import com.edigest.journalapp.responseDto.WeatherResponseDto;
 import com.edigest.journalapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/weather/{city}")
+    public ResponseEntity<WeatherResponseDto> getWeatherDetails(@PathVariable String city) {
+        try {
+            return new ResponseEntity<>(userService.getWeatherDetails(city), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
     }
 }
